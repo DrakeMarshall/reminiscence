@@ -1,7 +1,9 @@
-## reminiscence codebase
+## Reminiscence Codebase
 
 **Code:** https://github.com/DrakeMarshall/reminiscence
+
 **Base:** https://github.com/tgstation/tgstation
+
 **Wiki** https://tgstation13.org/wiki/Main_Page
 
 ## TODO
