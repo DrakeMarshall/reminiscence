@@ -77,7 +77,13 @@
 		if(get_held_index_of_item(I) % 2 == 0)
 			icon_file = I.righthand_file
 
-		hands += I.build_worn_icon(state = t_state, default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
+		var/hand_overlay = I.build_worn_icon(state = t_state, default_layer = HANDS_LAYER, default_icon_file = icon_file, isinhands = TRUE)
+
+		var/datum/component/stealth/pattern/pattern = I.GetComponent(/datum/component/stealth/pattern)
+		if(pattern)
+			hand_overlay = pattern.process_overlay(hand_overlay)
+
+		hands += hand_overlay
 
 	overlays_standing[HANDS_LAYER] = hands
 	apply_overlay(HANDS_LAYER)
@@ -123,7 +129,11 @@
 
 	if(wear_mask)
 		if(!(head && (head.flags_inv & HIDEMASK)))
-			overlays_standing[FACEMASK_LAYER] = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/mask.dmi')
+			var/mask_overlay = wear_mask.build_worn_icon(state = wear_mask.icon_state, default_layer = FACEMASK_LAYER, default_icon_file = 'icons/mob/mask.dmi')
+			var/datum/component/stealth/pattern/pattern = wear_mask.GetComponent(/datum/component/stealth/pattern)
+			if(pattern)
+				mask_overlay = pattern.process_overlay(mask_overlay)
+			overlays_standing[FACEMASK_LAYER] = mask_overlay
 		update_hud_wear_mask(wear_mask)
 
 	apply_overlay(FACEMASK_LAYER)
@@ -137,7 +147,11 @@
 
 	if(wear_neck)
 		if(!(head && (head.flags_inv & HIDENECK)))
-			overlays_standing[NECK_LAYER] = wear_neck.build_worn_icon(state = wear_neck.icon_state, default_layer = NECK_LAYER, default_icon_file = 'icons/mob/neck.dmi')
+			var/neck_overlay = wear_neck.build_worn_icon(state = wear_neck.icon_state, default_layer = NECK_LAYER, default_icon_file = 'icons/mob/neck.dmi')
+			var/datum/component/stealth/pattern/pattern = wear_neck.GetComponent(/datum/component/stealth/pattern)
+			if(pattern)
+				neck_overlay = pattern.process_overlay(neck_overlay)
+			overlays_standing[NECK_LAYER] = neck_overlay
 		update_hud_neck(wear_neck)
 
 	apply_overlay(NECK_LAYER)
@@ -150,7 +164,11 @@
 		inv.update_icon()
 
 	if(back)
-		overlays_standing[BACK_LAYER] = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = 'icons/mob/back.dmi')
+		var/back_overlay = back.build_worn_icon(state = back.icon_state, default_layer = BACK_LAYER, default_icon_file = 'icons/mob/back.dmi')
+		var/datum/component/stealth/pattern/pattern = back.GetComponent(/datum/component/stealth/pattern)
+		if(pattern)
+			back_overlay = pattern.process_overlay(back_overlay)
+		overlays_standing[BACK_LAYER] = back_overlay
 		update_hud_back(back)
 
 	apply_overlay(BACK_LAYER)
@@ -166,7 +184,11 @@
 		inv.update_icon()
 
 	if(head)
-		overlays_standing[HEAD_LAYER] = head.build_worn_icon(state = head.icon_state, default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/head.dmi')
+		var/head_overlay = head.build_worn_icon(state = head.icon_state, default_layer = HEAD_LAYER, default_icon_file = 'icons/mob/head.dmi')
+		var/datum/component/stealth/pattern/pattern = head.GetComponent(/datum/component/stealth/pattern)
+		if(pattern)
+			head_overlay = pattern.process_overlay(head_overlay)
+		overlays_standing[HEAD_LAYER] = head_overlay
 		update_hud_head(head)
 
 	apply_overlay(HEAD_LAYER)

@@ -215,6 +215,11 @@
 	beam_segments[beam_index] = null
 
 /obj/item/projectile/Bump(atom/A)
+	if(A.trenched && !src.trenched && src.original != A) //bypass hit unless aimed specifically at them
+		trajectory_ignore_forcemove = TRUE
+		forceMove(get_turf(A))
+		trajectory_ignore_forcemove = FALSE
+		return FALSE
 	var/datum/point/pcache = trajectory.copy_to()
 	if(check_ricochet(A) && check_ricochet_flag(A) && ricochets < ricochets_max)
 		ricochets++
@@ -346,6 +351,8 @@
 			direct_target.bullet_act(src, def_zone)
 			qdel(src)
 			return
+	if(firer && ismob(firer) && firer.trenched)
+		trenched = 1
 	if(isnum(angle))
 		setAngle(angle)
 	if(spread)

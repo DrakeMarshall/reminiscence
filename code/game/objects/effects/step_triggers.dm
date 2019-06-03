@@ -198,3 +198,14 @@
 
 	if(happens_once)
 		qdel(src)
+
+/obj/effect/step_trigger/fall/Trigger(atom/movable/A)
+	var/turf/T = locate(A.x, A.y, A.z - 1)
+	A.forceMove(T)
+	if(ismob(A))
+		var/mob/living/M = A
+		M.take_overall_damage(rand(20, 40))
+		if(iscarbon(M))
+			var/mob/living/carbon/C = M
+			C.Paralyze(rand(120,160))
+	A.visible_message("<span class='danger'>[A] falls from above!</span>")

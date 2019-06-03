@@ -229,3 +229,23 @@
 /obj/structure/ladder/unbreakable/binary/unlinked //Crew gets to complete one
 	id = "unlinked_binary"
 	area_to_place = null
+
+//A simpler and more adaptable ladder interface.
+/obj/structure/ladder/link
+	var/linkup = 0   //Boolean, whether this ladder goes up or down.
+	var/linkid = "" //Two linked ladders share an ID string.
+
+/obj/structure/ladder/link/LateInitialize()
+	if(linkup && !up)
+		for(var/obj/structure/ladder/link/L in world)
+			if(L != src && L.linkid == src.linkid)
+				up = L
+				L.down = src
+				L.update_icon()
+	else if(!linkup && !down)
+		for(var/obj/structure/ladder/link/L in world)
+			if(L != src && L.linkid == src.linkid)
+				down = L
+				L.up = src
+				L.update_icon()
+	update_icon()

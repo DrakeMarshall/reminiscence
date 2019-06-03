@@ -138,6 +138,11 @@ There are several things that need to be remembered:
 		if(OFFSET_UNIFORM in dna.species.offset_features)
 			uniform_overlay.pixel_x += dna.species.offset_features[OFFSET_UNIFORM][1]
 			uniform_overlay.pixel_y += dna.species.offset_features[OFFSET_UNIFORM][2]
+
+		var/datum/component/stealth/pattern/pattern = w_uniform.GetComponent(/datum/component/stealth/pattern)
+		if(pattern)
+			uniform_overlay = pattern.process_overlay(uniform_overlay)
+
 		overlays_standing[UNIFORM_LAYER] = uniform_overlay
 
 	apply_overlay(UNIFORM_LAYER)
@@ -164,6 +169,11 @@ There are several things that need to be remembered:
 		if(OFFSET_ID in dna.species.offset_features)
 			id_overlay.pixel_x += dna.species.offset_features[OFFSET_ID][1]
 			id_overlay.pixel_y += dna.species.offset_features[OFFSET_ID][2]
+
+		var/datum/component/stealth/pattern/pattern = wear_id.GetComponent(/datum/component/stealth/pattern)
+		if(pattern)
+			id_overlay = pattern.process_overlay(id_overlay)
+
 		overlays_standing[ID_LAYER] = id_overlay
 
 	apply_overlay(ID_LAYER)
@@ -201,6 +211,11 @@ There are several things that need to be remembered:
 		if(OFFSET_GLOVES in dna.species.offset_features)
 			gloves_overlay.pixel_x += dna.species.offset_features[OFFSET_GLOVES][1]
 			gloves_overlay.pixel_y += dna.species.offset_features[OFFSET_GLOVES][2]
+
+		var/datum/component/stealth/pattern/pattern = gloves.GetComponent(/datum/component/stealth/pattern)
+		if(pattern)
+			gloves_overlay = pattern.process_overlay(gloves_overlay)
+
 	overlays_standing[GLOVES_LAYER] = gloves_overlay
 	apply_overlay(GLOVES_LAYER)
 
@@ -229,6 +244,11 @@ There are several things that need to be remembered:
 			if(OFFSET_GLASSES in dna.species.offset_features)
 				glasses_overlay.pixel_x += dna.species.offset_features[OFFSET_GLASSES][1]
 				glasses_overlay.pixel_y += dna.species.offset_features[OFFSET_GLASSES][2]
+
+			var/datum/component/stealth/pattern/pattern = glasses.GetComponent(/datum/component/stealth/pattern)
+			if(pattern)
+				glasses_overlay = pattern.process_overlay(glasses_overlay)
+
 			overlays_standing[GLASSES_LAYER] = glasses_overlay
 	apply_overlay(GLASSES_LAYER)
 
@@ -255,6 +275,11 @@ There are several things that need to be remembered:
 		if(OFFSET_EARS in dna.species.offset_features)
 			ears_overlay.pixel_x += dna.species.offset_features[OFFSET_EARS][1]
 			ears_overlay.pixel_y += dna.species.offset_features[OFFSET_EARS][2]
+
+		var/datum/component/stealth/pattern/pattern = ears.GetComponent(/datum/component/stealth/pattern)
+		if(pattern)
+			ears_overlay = pattern.process_overlay(ears_overlay)
+
 		overlays_standing[EARS_LAYER] = ears_overlay
 	apply_overlay(EARS_LAYER)
 
@@ -280,6 +305,11 @@ There are several things that need to be remembered:
 		if(OFFSET_SHOES in dna.species.offset_features)
 			shoes_overlay.pixel_x += dna.species.offset_features[OFFSET_SHOES][1]
 			shoes_overlay.pixel_y += dna.species.offset_features[OFFSET_SHOES][2]
+
+		var/datum/component/stealth/pattern/pattern = shoes.GetComponent(/datum/component/stealth/pattern)
+		if(pattern)
+			shoes_overlay = pattern.process_overlay(shoes_overlay)
+
 		overlays_standing[SHOES_LAYER] = shoes_overlay
 
 	apply_overlay(SHOES_LAYER)
@@ -305,6 +335,11 @@ There are several things that need to be remembered:
 		if(OFFSET_S_STORE in dna.species.offset_features)
 			s_store_overlay.pixel_x += dna.species.offset_features[OFFSET_S_STORE][1]
 			s_store_overlay.pixel_y += dna.species.offset_features[OFFSET_S_STORE][2]
+
+		var/datum/component/stealth/pattern/pattern = s_store.GetComponent(/datum/component/stealth/pattern)
+		if(pattern)
+			s_store_overlay = pattern.process_overlay(s_store_overlay)
+
 		overlays_standing[SUIT_STORE_LAYER] = s_store_overlay
 	apply_overlay(SUIT_STORE_LAYER)
 
@@ -343,6 +378,11 @@ There are several things that need to be remembered:
 		if(OFFSET_BELT in dna.species.offset_features)
 			belt_overlay.pixel_x += dna.species.offset_features[OFFSET_BELT][1]
 			belt_overlay.pixel_y += dna.species.offset_features[OFFSET_BELT][2]
+
+		var/datum/component/stealth/pattern/pattern = belt.GetComponent(/datum/component/stealth/pattern)
+		if(pattern)
+			belt_overlay = pattern.process_overlay(belt_overlay)
+
 		overlays_standing[BELT_LAYER] = belt_overlay
 
 	apply_overlay(BELT_LAYER)
@@ -368,6 +408,11 @@ There are several things that need to be remembered:
 		if(OFFSET_SUIT in dna.species.offset_features)
 			suit_overlay.pixel_x += dna.species.offset_features[OFFSET_SUIT][1]
 			suit_overlay.pixel_y += dna.species.offset_features[OFFSET_SUIT][2]
+
+		var/datum/component/stealth/pattern/pattern = wear_suit.GetComponent(/datum/component/stealth/pattern)
+		if(pattern)
+			suit_overlay = pattern.process_overlay(suit_overlay)
+
 		overlays_standing[SUIT_LAYER] = suit_overlay
 	update_hair()
 	update_mutant_bodyparts()

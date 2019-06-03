@@ -668,3 +668,6 @@
 
 /obj/machinery/door/airlock/glass_large/narsie_act()
 	return
+
+/obj/machinery/door/airlock/highsecurity/dna
+	name = "dna-scanning airlock"

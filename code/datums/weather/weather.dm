@@ -29,6 +29,7 @@
 
 	var/overlay_layer = AREA_LAYER //Since it's above everything else, this is the layer used by default. TURF_LAYER is below mobs and walls if you need to use that.
 	var/overlay_plane = BLACKNESS_PLANE
+	var/overlay_blend_mode = 4
 	var/aesthetic = FALSE //If the weather has no purpose other than looks
 	var/immunity_type = "storm" //Used by mobs to prevent them from being affected by the weather
 
@@ -123,6 +124,7 @@
 		var/area/N = V
 		N.layer = overlay_layer
 		N.plane = overlay_plane
+		N.blend_mode = overlay_blend_mode
 		N.icon = 'icons/effects/weather_effects.dmi'
 		N.color = weather_color
 		switch(stage)
@@ -138,4 +140,5 @@
 				N.icon = 'icons/turf/areas.dmi'
 				N.layer = initial(N.layer)
 				N.plane = initial(N.plane)
+				N.blend_mode = initial(N.blend_mode)
 				N.set_opacity(FALSE)

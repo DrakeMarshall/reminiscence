@@ -172,6 +172,12 @@
 	icon = 'icons/turf/walls/rusty_reinforced_wall.dmi'
 	hardness = 15
 
+/turf/closed/wall/r_wall/polar
+	name = "reinforced wall"
+	desc = "A huge chunk of rusted reinforced metal."
+	icon = 'icons/turf/walls/polar.dmi'
+	hardness = 5
+
 /turf/closed/wall/mineral/bronze
 	name = "clockwork wall"
 	desc = "A huge chunk of bronze, decorated like gears and cogs."
@@ -180,3 +186,5 @@
 	sheet_type = /obj/item/stack/tile/bronze
 	sheet_amount = 2
 	girder_type = /obj/structure/girder/bronze
+
+/turf/closed/wall/frosted

@@ -1249,7 +1249,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 	if(!check_rights(R_ADMIN) || !check_rights(R_FUN))
 		return
 
-	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_ROD, ADMIN_PUNISHMENT_SUPPLYPOD_QUICK, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING)
+	var/list/punishment_list = list(ADMIN_PUNISHMENT_LIGHTNING, ADMIN_PUNISHMENT_BRAINDAMAGE, ADMIN_PUNISHMENT_GIB, ADMIN_PUNISHMENT_BSA, ADMIN_PUNISHMENT_FIREBALL, ADMIN_PUNISHMENT_ROD, ADMIN_PUNISHMENT_SUPPLYPOD_QUICK, ADMIN_PUNISHMENT_SUPPLYPOD, ADMIN_PUNISHMENT_MAZING, ADMIN_PUNISHMENT_EXITUS)
 
 	var/punishment = input("Choose a punishment", "DIVINE SMITING") as null|anything in punishment_list
 
@@ -1264,7 +1264,7 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			target.electrocution_animation(40)
 			to_chat(target, "<span class='userdanger'>The gods have punished you for your sins!</span>")
 		if(ADMIN_PUNISHMENT_BRAINDAMAGE)
-			target.adjustBrainLoss(199, 199)
+			target.adjustBrainLoss(199, 199) //Thou must relearn thy lessons!
 		if(ADMIN_PUNISHMENT_GIB)
 			target.gib(FALSE)
 		if(ADMIN_PUNISHMENT_BSA)
@@ -1312,6 +1312,20 @@ GLOBAL_LIST_EMPTY(custom_outfits) //Admin created outfits
 			if(!puzzle_imprison(target))
 				to_chat(usr,"<span class='warning'>Imprisonment failed!</span>")
 				return
+
+		if(ADMIN_PUNISHMENT_EXITUS)
+			target.visible_message("<span class='danger'>[target] is hit by a turbo-penetrator round in \the [BODY_ZONE_CHEST]!</span>", \
+					"<span class='userdanger'>[target] is hit by a turbo-penetrator round in \the [BODY_ZONE_CHEST]!</span>", null, COMBAT_MESSAGE_RANGE)
+			var/target_location = get_turf(target)
+			if(isalien(target))
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter/xenosplatter(target_location, target.dir) //Hits target from behind!
+			else
+				new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_location, target.dir)
+			target.add_splatter_floor(target_location)
+			target.physiology.bleed_mod *= 4
+			target.apply_damage(damage=60, damagetype=BRUTE, def_zone=BODY_ZONE_CHEST)
+			qdel(target.getorganslot(ORGAN_SLOT_HEART))
+			return
 
 	punish_log(target, punishment)
 

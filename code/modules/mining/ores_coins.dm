@@ -182,6 +182,13 @@ GLOBAL_LIST_INIT(sand_recipes, list(\
 	materials = list(MAT_TITANIUM=MINERAL_MATERIAL_AMOUNT)
 	refined_type = /obj/item/stack/sheet/mineral/titanium
 
+/obj/item/stack/ore/promethium
+	name = "promethium ore"
+	icon = 'icons/obj/promethium.dmi'
+	icon_state = "promethium"
+	singular_name = "promethium ore chunk"
+	points = 20
+
 /obj/item/stack/ore/slag
 	name = "slag"
 	desc = "Completely useless."

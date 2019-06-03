@@ -90,6 +90,7 @@
 
 	var/air_tight = FALSE	//TRUE means density will be set as soon as the door begins to close
 	var/prying_so_hard = FALSE
+	var/frosted = FALSE
 
 	rad_flags = RAD_PROTECT_CONTENTS | RAD_NO_CONTAMINATE
 	rad_insulation = RAD_MEDIUM_INSULATION
@@ -445,6 +446,7 @@
 	var/mutable_appearance/lights_overlay
 	var/mutable_appearance/panel_overlay
 	var/mutable_appearance/weld_overlay
+	var/mutable_appearance/frost_overlay
 	var/mutable_appearance/damag_overlay
 	var/mutable_appearance/sparks_overlay
 	var/mutable_appearance/note_overlay
@@ -464,6 +466,8 @@
 					panel_overlay = get_airlock_overlay("panel_closed", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
+			if(frosted)
+				frost_overlay = get_airlock_overlay("snow_closed", overlays_file)
 			if(obj_integrity <integrity_failure)
 				damag_overlay = get_airlock_overlay("sparks_broken", overlays_file)
 			else if(obj_integrity < (0.75 * max_integrity))
@@ -495,6 +499,8 @@
 				damag_overlay = get_airlock_overlay("sparks_damaged", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
+			if(frosted)
+				frost_overlay = get_airlock_overlay("snow_closed", overlays_file)
 			lights_overlay = get_airlock_overlay("lights_denied", overlays_file)
 			if(note)
 				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
@@ -517,6 +523,8 @@
 				damag_overlay = get_airlock_overlay("sparks_damaged", overlays_file)
 			if(welded)
 				weld_overlay = get_airlock_overlay("welded", overlays_file)
+			if(frosted)
+				frost_overlay = get_airlock_overlay("snow_closed", overlays_file)
 			if(note)
 				note_overlay = get_airlock_overlay(notetype, note_overlay_file)
 
@@ -533,6 +541,8 @@
 					panel_overlay = get_airlock_overlay("panel_closing_protected", overlays_file)
 				else
 					panel_overlay = get_airlock_overlay("panel_closing", overlays_file)
+			if(frosted)
+				frost_overlay = get_airlock_overlay("snow_closing", overlays_file)
 			if(note)
 				note_overlay = get_airlock_overlay("[notetype]_closing", note_overlay_file)
 
@@ -549,6 +559,8 @@
 					panel_overlay = get_airlock_overlay("panel_open", overlays_file)
 			if(obj_integrity < (0.75 * max_integrity))
 				damag_overlay = get_airlock_overlay("sparks_open", overlays_file)
+			if(frosted)
+				frost_overlay = get_airlock_overlay("snow_open", overlays_file)
 			if(note)
 				note_overlay = get_airlock_overlay("[notetype]_open", note_overlay_file)
 
@@ -565,6 +577,8 @@
 					panel_overlay = get_airlock_overlay("panel_opening_protected", overlays_file)
 				else
 					panel_overlay = get_airlock_overlay("panel_opening", overlays_file)
+			if(frosted)
+				frost_overlay = get_airlock_overlay("snow_opening", overlays_file)
 			if(note)
 				note_overlay = get_airlock_overlay("[notetype]_opening", note_overlay_file)
 
@@ -574,6 +588,7 @@
 	add_overlay(lights_overlay)
 	add_overlay(panel_overlay)
 	add_overlay(weld_overlay)
+	add_overlay(frost_overlay)
 	add_overlay(sparks_overlay)
 	add_overlay(damag_overlay)
 	add_overlay(note_overlay)
@@ -806,6 +821,15 @@
 			if(shock(user, 75))
 				return
 	add_fingerprint(user)
+
+	if(frosted && istype(C, /obj/item/weldingtool))
+		var/obj/item/weldingtool/WT = C
+		if(!WT.use(1))
+			return
+		to_chat(user, "<span class='notice'>You de-ice the airlock.</span>")
+		playsound(loc, WT.usesound, 40, 1)
+		thaw()
+		return
 
 	if(panel_open)
 		switch(security_level)
@@ -1656,6 +1680,18 @@
 		close()
 	else
 		open()
+
+/obj/machinery/door/airlock/proc/freeze()
+	frosted = 1
+	update_icon()
+
+/obj/machinery/door/airlock/proc/thaw()
+	frosted = 0
+	update_icon()
+
+/obj/machinery/door/airlock/fire_act()
+	thaw()
+	return ..()
 
 #undef AIRLOCK_CLOSED
 #undef AIRLOCK_CLOSING

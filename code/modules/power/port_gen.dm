@@ -285,3 +285,18 @@
 
 /obj/machinery/power/port_gen/pacman/mrs/overheat()
 	explosion(src.loc, 4, 4, 4, -1)
+
+/obj/machinery/power/port_gen/pacman/imperial
+	name = "\improper imperial MKVI portable generator"
+	icon = 'icons/obj/machines/imperial_generator.dmi'
+	base_icon = "imp"
+	icon_state = "imp_0"
+	circuit = /obj/item/circuitboard/machine/pacman/imperial
+	sheet_path = /obj/item/stack/ore/promethium
+	power_gen = 10000
+	max_sheets = 200
+
+/obj/machinery/power/port_gen/pacman/mrs/overheat()
+	explosion(src.loc, 3, 3, 3, -1)
+
+/obj/item/stack/ore/promethium

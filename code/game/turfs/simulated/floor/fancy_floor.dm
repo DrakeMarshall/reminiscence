@@ -197,7 +197,6 @@
 	floor_tile = /obj/item/stack/tile/carpet/black
 	canSmoothWith = list(/turf/open/floor/carpet/black)
 
-
 /turf/open/floor/carpet/narsie_act(force, ignore_mobs, probability = 20)
 	. = (prob(probability) || force)
 	for(var/I in src)
